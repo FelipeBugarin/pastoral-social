@@ -34,6 +34,14 @@
                     </x-slot>
 
                     <x-slot name="content">
+                        @if(Auth::id() === 1)
+                            <div class="border-t border-gray-200 my-1"></div>
+                            <div class="px-4 py-1 text-xs font-bold text-slate-400 uppercase tracking-widest">Vicariato Admin</div>
+                            <x-dropdown-link :href="route('admin.coordenadores.index')" class="text-blue-700 font-bold">
+                                👥 Gerenciar Coordenadores
+                            </x-dropdown-link>
+                        @endif
+
                         <x-dropdown-link :href="route('profile.edit')">
                             {{ __('Profile') }}
                         </x-dropdown-link>

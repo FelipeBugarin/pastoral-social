@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AssistidoController;
 use App\Http\Controllers\AlimentoController;
+use App\Http\Controllers\Admin\CoordenadorController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -28,6 +30,12 @@ Route::middleware('auth')->group(function () {
 
     // Ação de requisitar (Por enquanto vamos simular um alerta ou enviar um e-mail)
     Route::post('/excedentes/{id}/requisitar', [AlimentoController::class, 'requisitar'])->name('alimentos.requisitar');
+
+    Route::middleware('admin')->group(function () {
+        Route::get('/gerenciar-coordenadores', [CoordenadorController::class, 'index'])->name('admin.coordenadores.index');
+        Route::patch('/gerenciar-coordenadores/{id}/aprovar', [CoordenadorController::class, 'aprovar'])->name('admin.coordenadores.aprovar');
+    });
+
 });
 
 require __DIR__.'/auth.php';

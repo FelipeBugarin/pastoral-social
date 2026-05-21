@@ -50,6 +50,14 @@ class LoginRequest extends FormRequest
             ]);
         }
 
+        $user = Auth::user();
+        if (!$user->is_approved) {
+            Auth::logout();
+            throw ValidationException::withMessages([
+                'email' => 'Sua conta de coordenador aguarda aprovação do administrador do Vicariato.',
+            ]);
+        }
+
         RateLimiter::clear($this->throttleKey());
     }
 

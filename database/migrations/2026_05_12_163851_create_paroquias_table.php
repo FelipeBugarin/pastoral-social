@@ -13,9 +13,13 @@ return new class extends Migration
     {
         Schema::create('paroquias', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
             $table->string('nome');
             $table->string('endereco')->nullable();
+            $table->timestamps();
+        });
+
+        Schema::table('users', function (Blueprint $table) {
+            $table->foreign('paroquia_id')->references('id')->on('paroquias')->onDelete('set null');
         });
     }
 
@@ -24,6 +28,10 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropForeign(['paroquia_id']);
+        });
+
         Schema::dropIfExists('paroquias');
     }
 };

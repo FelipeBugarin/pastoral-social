@@ -2,6 +2,23 @@
     <form method="POST" action="{{ route('register') }}">
         @csrf
 
+        <!-- Seleção de Paróquia (Adicionado) -->
+        @php
+            // Busca todas as paróquias direto no banco para listar no select
+            $paroquias = \App\Models\Paroquia::all();
+        @endphp
+
+        <div class="mt-4">
+            <x-input-label for="paroquia_id" value="Sua Paróquia / Igreja" />
+            <select id="paroquia_id" name="paroquia_id" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" required>
+                <option value="">Selecione a paróquia onde você atua...</option>
+                @foreach($paroquias as $p)
+                    <option value="{{ $p->id }}">{{ $p->nome }}</option>
+                @endforeach
+            </select>
+            <x-input-error :messages="$errors->get('paroquia_id')" class="mt-2" />
+        </div>
+
         <!-- Name -->
         <div>
             <x-input-label for="name" :value="__('Name')" />
