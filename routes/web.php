@@ -5,15 +5,15 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AssistidoController;
 use App\Http\Controllers\AlimentoController;
 use App\Http\Controllers\Admin\CoordenadorController;
-
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\CestaController;
+use App\Http\Controllers\EntregaController;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -27,6 +27,15 @@ Route::middleware('auth')->group(function () {
     Route::post('/estoque/salvar', [AlimentoController::class, 'store'])->name('alimentos.store');
     // Tela de excedentes (Listagem)
     Route::get('/excedentes', [AlimentoController::class, 'excedentes'])->name('alimentos.excedentes');
+    //Tela de configuração da cesta (Listagem + Formulário)
+    Route::get('/configurar-cesta', [CestaController::class, 'index'])->name('cesta.index');
+    Route::post('/configurar-cesta', [CestaController::class, 'store'])->name('cesta.store');
+    Route::delete('/configurar-cesta/{id}', [CestaController::class, 'destroy'])->name('cesta.destroy');
+    // Tela de distribuição (Listagem dos assistidos e opção de distribuir a cesta)
+    Route::get('/entregas', [EntregaController::class, 'index'])->name('entregas.index');
+    Route::get('/entregas/nova', [EntregaController::class, 'create'])->name('entregas.create');
+    Route::post('/entregas/salvar', [EntregaController::class, 'store'])->name('entregas.store');
+
 
     // Ação de requisitar (Por enquanto vamos simular um alerta ou enviar um e-mail)
     Route::post('/excedentes/{id}/requisitar', [AlimentoController::class, 'requisitar'])->name('alimentos.requisitar');
