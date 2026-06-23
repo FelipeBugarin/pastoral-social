@@ -12,8 +12,7 @@ class Alimento extends Model
         'nome', 
         'quantidade', 
         'unidade', 
-        'excedente', 
-        'validade'
+        'excedente'
     ];
 
     public function paroquia()
