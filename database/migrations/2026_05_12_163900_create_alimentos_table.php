@@ -19,7 +19,6 @@ return new class extends Migration
             $table->decimal('quantidade', 10, 2); // Ex: 10.5 kg
             $table->string('unidade'); // kg, unidade, litro
             $table->boolean('excedente')->default(false); // Define se sobra para doação entre paróquias
-            $table->date('validade')->nullable();
         });
     }
 

@@ -23,7 +23,6 @@
                                 <th class="py-3 px-2 text-center">Quantidade</th>
                                 <th class="py-3 px-2">Paróquia</th>
                                 <th class="py-3 px-2">Status</th>
-                                <th class="py-3 px-2 text-center">Validade</th>
                             </tr>
                         </thead>
                         <tbody class="text-slate-700">
@@ -42,9 +41,6 @@
                                     @else
                                         <span class="bg-blue-100 text-blue-700 px-2 py-1 rounded text-[10px] font-black uppercase">Uso Local</span>
                                     @endif
-                                </td>
-                                <td class="py-4 px-2 text-center text-sm {{ $item->validade && \Carbon\Carbon::parse($item->validade)->isPast() ? 'text-red-500 font-bold' : '' }}">
-                                    {{ $item->validade ? \Carbon\Carbon::parse($item->validade)->format('d/m/Y') : '---' }}
                                 </td>
                             </tr>
                             @endforeach
